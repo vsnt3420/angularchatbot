@@ -1,0 +1,64 @@
+<div
+  class="w-full sm:h-[calc(100vh-60px)] h-[calc(100vh-65px)] flex p-5 justify-center bg-purple-200"
+>
+  <div
+    class=" w-full max-w-7xl px-5 py-2.5 rounded-xl shadow-xl justify-end flex flex-col bg-purple-50"
+  >
+    <div class="flex flex-col space-y-4 p-3 overflow-y-auto">
+      <div
+        *ngFor="let message of textareaMessages"
+        class="flex mb-4 justify-{{
+          message.author.id === user.id ? 'end' : 'start'
+        }}"
+      >
+        <div
+          *ngIf="message.author.id === user.id"
+          class="max-w-full sm:w-1/2 w-full rounded-lg shadow-lg p-3 font-normal whitespace-normal bg-purple-300  text-neutral-950"
+        >
+          <p>{{ message.text }}</p>
+          <div
+            class="flex justify-end text-xs font-medium text-neutral-500 mt-1"
+          >
+            {{ message.timestamp | date : "hh:mm a" }}
+          </div>
+        </div>
+        <div
+          *ngIf="message.author.id !== user.id"
+          class="max-w-full sm:w-1/2 w-full rounded-lg shadow-lg p-3 text-neutral-950 whitespace-normal bg-purple-50"
+        >
+          <div [innerHTML]="message.text"></div>
+          <div
+            class="flex justify-end text-xs font-medium text-neutral-500 mt-1"
+          >
+            {{ message.timestamp | date : "hh:mm a" }}
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="loading"
+        class="max-w-full sm:w-1/2 w-full  rounded-lg shadow-lg p-3 bg-purple-50 text-neutral-950 whitespace-normal"
+      >
+        <div class="ml-2">Thinking...</div>
+       
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col sm:flex-row sm:gap-3 gap-5 mt-px justify-center items-center"
+    >
+      <textarea
+        rows="4"
+        [(ngModel)]="userMessage"
+        class="w-full px-3 py-2 rounded-lg shadow-lg resize-none whitespace-normal bg-purple-50 border-2 border-purple-400"
+        placeholder="What are 5 creative things I could do with my kids' art? I don't want to throw them away, but it's also so much clutter."
+      ></textarea>
+      <button
+        class="px-4 py-2 flex font-medium text-base rounded-lg gap-2 bg-purple-500 text-white"
+        (click)="sendUserMessage()"
+      >
+        Generate
+      </button>
+    </div>
+  </div>
+</div>

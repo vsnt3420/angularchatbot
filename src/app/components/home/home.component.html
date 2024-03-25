@@ -1,0 +1,137 @@
+<div
+  class="fixed bottom-10 right-8 cursor-pointer z-50 p-2 rounded-lg bg-purple-800"
+  (click)="toggleChatbox()"
+>
+  <mat-icon *ngIf="!isChatboxOpen" class="mt-px text-white">message</mat-icon>
+  <mat-icon *ngIf="isChatboxOpen" class="mt-px text-white">close</mat-icon>
+</div>
+
+<div
+  *ngIf="isChatboxOpen"
+  class="w-full md:w-[500px] fixed bottom-24 lg:right-4 md:right-2 p-4 rounded-lg shadow-md z-50 bg-purple-100"
+>
+  <div class="w-full h-[20rem] overflow-y-auto mb-4">
+    <div
+      *ngFor="let message of textareaMessages"
+      class="flex mb-4 justify-{{
+        message.author.id === user.id ? 'end' : 'start'
+      }}"
+    >
+      <div
+        *ngIf="message.author.id === user.id"
+        class="max-w-full sm:w-1/2 w-full rounded-lg shadow-lg p-3 font-normal text-neutral-950 bg-purple-300 whitespace-normal"
+      >
+        <p>{{ message.text }}</p>
+        <div class="flex justify-end text-xs font-medium mt-1 text-neutral-500">
+          {{ message.timestamp | date : "hh:mm a" }}
+        </div>
+      </div>
+      <div
+        *ngIf="message.author.id !== user.id"
+        class="max-w-full sm:w-1/2 w-full rounded-lg shadow-lg p-3 whitespace-normal bg-purple-50 text-neutral-950"
+      >
+        <div [innerHTML]="message.text"></div>
+        <div class="flex justify-end mt-1 text-xs font-medium text-neutral-500">
+          {{ message.timestamp | date : "hh:mm a" }}
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="loading"
+      class="max-w-full sm:w-1/2 w-full rounded-lg shadow-lg p-3 whitespace-normal bg-purple-50 text-neutral-950"
+    >
+      <div class="ml-2">Thinking...</div>
+    </div>
+  </div>
+
+  <div
+    class="flex flex-col sm:flex-row sm:gap-3 gap-5 mt-px justify-center items-center"
+  >
+    <textarea
+      rows="2"
+      [(ngModel)]="userMessage"
+      class="w-full px-3 py-2 rounded-lg shadow-lg border-2 resize-none whitespace-normal bg-purple-50 border-purple-400"
+      placeholder=""
+    ></textarea>
+    <button
+      class="px-2 py-1 flex font-medium text-base rounded-lg gap-2 bg-purple-500 text-white"
+      (click)="sendUserMessage()"
+    >
+      Generate
+    </button>
+  </div>
+</div>
+
+<div
+  class="max-w-7xl mx-auto h-full px-6 py-4 text-justify"
+  (click)="closeChatbox()"
+>
+  <div class="py-2 space-y-3">
+    <h1 class="text-xl md:text-2xl font-bold text-purple-500">
+      Welcome to our AI Side Chatbot!
+    </h1>
+    <p class="text-base md:text-lg">
+      I'm here to assist you with any questions you have. Whether you need help
+      with product information, troubleshooting, or just want to have a chat,
+      I'm at your service.
+    </p>
+    <p class="text-base md:text-lg">
+      "Feel free to ask me anything, and I'll do my best to provide you with the
+      information you need" is an invitation or encouragement for users to
+      engage with the chatbot by asking questions or seeking assistance.
+    </p>
+    <p class="text-base md:text-lg">
+      Side chatbots are a versatile and effective tool for enhancing user
+      engagement, providing customer support, and streamlining communication
+      between businesses and their audience in a non-intrusive and user-friendly
+      manner.
+    </p>
+    <p class="text-base md:text-lg">
+      Website or application owners can customize the appearance, behavior, and
+      functionality of side chatbots to align with their brand identity, user
+      interface design, and specific requirements.
+    </p>
+  </div>
+  <div class="py-2 space-y-3">
+    <h1 class="text-xl md:text-2xl font-bold text-purple-500">
+      Instructions for Opening the Chatbot
+    </h1>
+    <h2 class="text-xl md:text-2xl font-semibold text-purple-500">
+      Small Chatbot:
+    </h2>
+    <ul class="text-base md:text-lg space-y-4">
+      <li>
+        1. Look for the chat icon on the bottom right corner of your screen.
+      </li>
+      <li>2. Click on the chat icon to open the compact chat interface.</li>
+      <li>
+        3. Begin typing your questions or messages directly into the chat
+        window.
+      </li>
+      <li>4. The AI chatbot will promptly respond to your queries.</li>
+    </ul>
+  </div>
+  <div class="py-2 space-y-3">
+    <h2 class="text-xl md:text-2xl font-semibold text-purple-500">
+      Full Chatbot:
+    </h2>
+    <ul class="text-base md:text-lg space-y-4">
+      <li>1. Navigate to the navbar at the top of the webpage.</li>
+      <li>2. Locate the Chatbot button in the Navbar.</li>
+      <li>
+        3. Click on the chatbot link to expand and open the full chat interface.
+      </li>
+      <li>
+        4. Once the chat interface expands, you can start typing your questions
+        or messages.
+      </li>
+      <li>
+        5. Expect instant responses from the AI chatbot to assist you further.
+      </li>
+    </ul>
+  </div>
+  <div class="py-2 text-2xl text-center text-purple-500">
+    Enjoy chatting with our AI chatbot!
+  </div>
+</div>
